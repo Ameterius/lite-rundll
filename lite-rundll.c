@@ -28,7 +28,7 @@ int main(int argc, char *argv[]){
 			dll_buffer = LoadLibraryA(argv[2]); // executing w/ DLLMain 
 			if (dll_buffer == NULL){
 				if(GetLastError() == 1114){
-					sprintf(error_buffer, "[!!WARNING!!]\nDLLMain returned FALSE\n\nMode: 1 [entrypoint = DLLMain]\nDLL File: %s\n(Win) LastError: %i", argv[2], GetLastError());
+					sprintf(error_buffer, "[!!WARNING!!]\nDLLMain returned FALSE\n\nMode: 2 [entrypoint = DLLMain]\nDLL File: %s\n(Win) LastError: %i", argv[2], GetLastError());
 					MessageBox(NULL, error_buffer, argv[0], 0x00000000L + 0x00000030L);
 				}
 				if(GetLastError() != 1114){
@@ -51,14 +51,14 @@ int main(int argc, char *argv[]){
 			// 	w/o dll references!
 			dll_buffer = LoadLibraryExA(argv[2], NULL, DONT_RESOLVE_DLL_REFERENCES);
 			if (dll_buffer == NULL){
-				sprintf(error_buffer, "[!!!ERROR!!!]\ndll_buffer is NULL\n\nMode: 1 [entrypoint = DLLMain]\nDLL File: %s\n(Win) LastError: %i", argv[2], GetLastError());
+				sprintf(error_buffer, "[!!!ERROR!!!]\ndll_buffer is NULL\n\nMode: 3 [entrypoint = DLLMain]\nDLL File: %s\n(Win) LastError: %i", argv[2], GetLastError());
 				MessageBox(NULL, error_buffer, argv[0], 0x00000010L + 0x00000000L);
 				FreeLibrary(dll_buffer);
 			}
 			typedef void (*entrypoint)(void);
 			entrypoint pointEx = (entrypoint)GetProcAddress(dll_buffer, argv[3]);
 			if (pointEx == NULL){
-				sprintf(error_buffer, "[!!!ERROR!!!]\nentrypoint is NULL\n\nMode: 2 [entrypoint = %s]\nDLL file: %s\nDLL hInstance: 0x%p\n(Win) LastError: %i", argv[3], argv[2],(void*)dll_buffer, GetLastError());
+				sprintf(error_buffer, "[!!!ERROR!!!]\nentrypoint is NULL\n\nMode: 3 [entrypoint = %s]\nDLL file: %s\nDLL hInstance: 0x%p\n(Win) LastError: %i", argv[3], argv[2],(void*)dll_buffer, GetLastError());
 				MessageBox(NULL, error_buffer, argv[0], 0x00000000L + 0x00000010L);
 				FreeLibrary(dll_buffer);
 			}

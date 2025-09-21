@@ -57,7 +57,7 @@ int main(int argc, char *argv[]){
 			}
 			typedef void (*entrypoint)(void);
 			entrypoint pointEx = (entrypoint)GetProcAddress(dll_buffer, argv[3]);
-			if (point == NULL){
+			if (pointEx == NULL){
 				sprintf(error_buffer, "[!!!ERROR!!!]\nentrypoint is NULL\n\nMode: 2 [entrypoint = %s]\nDLL file: %s\nDLL hInstance: 0x%p\n(Win) LastError: %i", argv[3], argv[2],(void*)dll_buffer, GetLastError());
 				MessageBox(NULL, error_buffer, argv[0], 0x00000000L + 0x00000010L);
 				FreeLibrary(dll_buffer);
@@ -70,4 +70,5 @@ int main(int argc, char *argv[]){
 			MessageBox(NULL, error_buffer, "help", 0x00000000L);
 			break;
 	}
+
 }
